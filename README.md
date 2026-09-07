@@ -41,6 +41,7 @@
 
 ## 📂 Project Structure
 
+```text
 mindflow-ai/
 │
 ├── public/
@@ -53,6 +54,7 @@ mindflow-ai/
 ├── .env
 ├── .gitignore
 └── README.md
+```
 
 ---
 
