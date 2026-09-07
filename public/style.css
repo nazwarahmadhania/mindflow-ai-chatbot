@@ -327,6 +327,11 @@ body {
   font-weight: 600;
 }
 
+/* Remove horizontal divider lines inside message bubbles */
+.message-bubble hr {
+  display: none !important;
+}
+
 /* Structured Plan Box (like the green container in the screenshot) */
 .plan-container,
 .message-bubble.bot blockquote {

@@ -36,20 +36,24 @@ function getCurrentTime() {
 
 // Render Markdown safely into HTML
 function formatMarkdown(text) {
+  if (typeof text !== 'string') return '';
+  // Remove horizontal divider lines (---, ***, ___) from AI responses
+  const cleanText = text.replace(/^[\s]*[-*_]{3,}[\s]*$/gm, '').replace(/\n{3,}/g, '\n\n');
+
   if (window.marked) {
     try {
       marked.setOptions({
         breaks: true,
         gfm: true
       });
-      const rawHtml = marked.parse(text);
+      const rawHtml = marked.parse(cleanText);
       return window.DOMPurify ? DOMPurify.sanitize(rawHtml) : rawHtml;
     } catch (e) {
       console.error('Markdown parse error:', e);
-      return text;
+      return cleanText;
     }
   }
-  return text;
+  return cleanText;
 }
 
 // Bot Sprout Avatar SVG string

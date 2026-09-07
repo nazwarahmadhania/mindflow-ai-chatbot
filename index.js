@@ -182,6 +182,13 @@ app.post('/api/chat', async (req, res) => {
                     Use encouraging language.
                     --------------------------------------------------
 
+                    # CLEAN FORMATTING (STRICT RULES)
+                    • DILARANG menggunakan garis pemisah horizontal seperti "---", "***", atau "___" di dalam balasan.
+                    • DILARANG menggunakan tanda strip/minus "-" sebagai poin daftar (bullet points).
+                    • Sebagai pengganti tanda strip, gunakan penomoran bersih (1., 2., 3.) atau gunakan emoji yang relevan (🌱, 🎯, 💡, ☕, ✅) atau teks tebal.
+                    • Teks harus mengalir bersih dan nyaman dibaca tanpa garis pemisah yang memotong tampilan chat.
+                    --------------------------------------------------
+
                     # RESPONSE LENGTH
                     Adjust response length based on user needs.
                     Simple question:

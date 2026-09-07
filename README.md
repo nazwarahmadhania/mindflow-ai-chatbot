@@ -41,7 +41,6 @@
 
 ## 📂 Project Structure
 
-```text
 mindflow-ai/
 │
 ├── public/
@@ -54,7 +53,6 @@ mindflow-ai/
 ├── .env
 ├── .gitignore
 └── README.md
-```
 
 ---
 
@@ -76,7 +74,7 @@ mindflow-ai/
    ```
    
 4. **Set up Environment Variables**
-   Buat file bernama .env di root folder project, lalu masukkan API Key Gemini Anda:
+   Create a `.env` file in the root directory and add your Gemini API Key:
 
    ```env
    GEMINI_API_KEY=your_gemini_api_key_here
@@ -86,12 +84,12 @@ mindflow-ai/
    ```bash
    npm start
    ```
-   (atau bisa juga dengan node index.js)
+   (or you can run node index.js)
 
 6. **Open your browser**
    ```text
    http://localhost:3000
-   ```
+```
 
 ---
 
