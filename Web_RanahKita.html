@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RanahKita - Menjelajahi Budaya, Menjaga Warisan Sumatra Barat</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    screens: {
+                        xs: '360px',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                    },
+                    colors: {
+                        ranah: {
+                            dark: '#112925',
+                            darker: '#0a1a18',
+                            green: '#183e37',
+                            lightgreen: '#225249',
+                            cream: '#f5f3ec',
+                            cardBg: '#efecdf',
+                            gold: '#dca433',
+                            goldHover: '#c48f24',
+                            textDark: '#1f2927',
+                            textMuted: '#586b66',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #f5f3ec;
+            color: #1f2927;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, rgba(10, 26, 24, 0.45) 0%, rgba(17, 41, 37, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #dca433;
+            border-radius: 9999px;
+        }
+        .bg-motif {
+            background-image: radial-gradient(#dca433 0.75px, transparent 0.75px);
+            background-size: 12px 12px;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-ranah-gold selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-ranah-dark text-white border-b border-ranah-green shadow-lg">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer shrink-0" onclick="navigateTo('home')">
+                <div class="w-9 sm:w-11 h-9 sm:h-11 rounded-xl bg-gradient-to-br from-ranah-gold to-amber-600 flex items-center justify-center text-ranah-dark shadow-md p-1.5">
+                    <!-- Minang House Roof SVG Icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full text-ranah-dark">
+                        <path d="M3 21h18M5 21V11l7-7 7 7v10M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 10l10-8 10 8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="hidden xs:block">
+                    <h1 class="text-lg sm:text-2xl font-cinzel font-extrabold tracking-wide text-white leading-none">RanahKita</h1>
+                    <p class="text-[8px] sm:text-[10px] text-ranah-gold tracking-wider font-medium uppercase mt-0.5">Menjelajahi Budaya, Menjaga Warisan Sumatera Barat</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-4 xl:space-x-7 text-xs lg:text-sm font-semibold tracking-wide">
+                <button onclick="navigateTo('home')" class="text-ranah-gold hover:text-amber-300 transition border-b-2 border-ranah-gold pb-1" id="nav-home">Beranda</button>
+                <button onclick="navigateTo('cities')" class="hover:text-ranah-gold transition text-slate-200 pb-1" id="nav-cities">Kota</button>
+                <button onclick="navigateTo('culture')" class="hover:text-ranah-gold transition text-slate-200 pb-1" id="nav-culture">Budaya</button>
+                <button onclick="navigateTo('culinary')" class="hover:text-ranah-gold transition text-slate-200 pb-1" id="nav-culinary">Kuliner</button>
+                <button onclick="navigateTo('calendar')" class="hover:text-ranah-gold transition text-slate-200 pb-1" id="nav-calendar">Festival</button>
+                <button onclick="navigateTo('about')" class="hover:text-ranah-gold transition text-slate-200 pb-1" id="nav-about">Tentang</button>
+            </nav>
+
+            <!-- Search & Actions Right -->
+            <div class="flex items-center space-x-1.5 sm:space-x-3">
+                <div class="relative hidden sm:block w-40 md:w-56 lg:w-72">
+                    <input type="text" id="header-search" oninput="handleSearch(this.value)" placeholder="Cari..." class="w-full bg-ranah-green/60 text-white placeholder-slate-400 text-xs lg:text-sm px-3 lg:px-4 py-2 lg:py-2.5 rounded-full border border-ranah-lightgreen focus:outline-none focus:border-ranah-gold transition pr-8" />
+                    <i data-lucide="search" class="w-3.5 h-3.5 lg:w-4 lg:h-4 text-slate-300 absolute right-2 lg:right-3 top-2 lg:top-2.5"></i>
+                    <div id="search-results" class="absolute top-full left-0 right-0 bg-white text-slate-800 rounded-2xl shadow-2xl mt-2 max-h-64 overflow-y-auto z-50 hidden border border-slate-200 text-xs lg:text-sm"></div>
+                </div>
+
+                <!-- Favorites Badge Button -->
+                <button onclick="toggleFavoritesModal()" class="relative p-1.5 sm:p-2 sm:p-2.5 text-slate-300 hover:text-ranah-gold rounded-full hover:bg-ranah-green transition" title="Kota Favorit">
+                    <i data-lucide="heart" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    <span id="fav-count" class="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-4 h-4 bg-ranah-gold text-ranah-dark text-[9px] sm:text-[10px] rounded-full flex items-center justify-center font-bold hidden">0</span>
+                </button>
+
+                <!-- Profile / Quiz XP -->
+                <button onclick="navigateTo('quiz')" class="p-1.5 sm:p-2 bg-ranah-green hover:bg-ranah-lightgreen text-ranah-gold rounded-full border border-ranah-gold/30 transition flex items-center gap-1 sm:gap-2 px-2 sm:px-3 text-xs" title="Profil XP">
+                    <i data-lucide="user" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                    <span id="header-score" class="text-[9px] sm:text-xs font-bold text-white hidden sm:inline">0 XP</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-1.5 sm:p-2 rounded-lg text-slate-200 hover:bg-ranah-green">
+                    <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-ranah-darker border-b border-ranah-green px-4 sm:px-6 pt-2 pb-6 space-y-3 text-xs sm:text-sm font-medium">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-ranah-gold hover:text-amber-300">Beranda</button>
+            <button onclick="navigateTo('cities'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Kota & Kabupaten</button>
+            <button onclick="navigateTo('culture'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Budaya & Tradisi</button>
+            <button onclick="navigateTo('culinary'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Kuliner Khas</button>
+            <button onclick="navigateTo('calendar'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Festival</button>
+            <button onclick="navigateTo('quiz'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Kuis & Badge XP</button>
+            <button onclick="navigateTo('about'); toggleMobileMenu()" class="block w-full text-left py-2.5 text-slate-200 hover:text-ranah-gold">Tentang Kami</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main id="app-container" class="flex-grow">
+        <!-- Dynamic Page Views Rendered Here -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ranah-dark text-white border-t border-ranah-green mt-12 sm:mt-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-10 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+            <!-- Footer Brand -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <div class="w-8 sm:w-9 h-8 sm:h-9 rounded-lg bg-ranah-gold flex items-center justify-center text-ranah-dark font-bold">
+                    <i data-lucide="landmark" class="w-4 sm:w-5 h-4 sm:h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-base sm:text-lg font-cinzel font-bold text-white">RanahKita</h3>
+                    <p class="text-[10px] sm:text-xs text-slate-400">Menjelajahi Budaya, Menjaga Warisan Sumatra Barat</p>
+                </div>
+            </div>
+
+            <!-- Footer Nav Links -->
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-6 text-[10px] sm:text-xs text-slate-300 font-medium">
+                <a href="#" onclick="navigateTo('home')" class="hover:text-ranah-gold transition">Beranda</a>
+                <a href="#" onclick="navigateTo('cities')" class="hover:text-ranah-gold transition">Kota</a>
+                <a href="#" onclick="navigateTo('culture')" class="hover:text-ranah-gold transition">Budaya</a>
+                <a href="#" onclick="navigateTo('culinary')" class="hover:text-ranah-gold transition">Kuliner</a>
+                <a href="#" onclick="navigateTo('calendar')" class="hover:text-ranah-gold transition">Festival</a>
+                <a href="#" onclick="navigateTo('about')" class="hover:text-ranah-gold transition">Tentang</a>
+            </div>
+
+            <!-- Socials & Copyright -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-[9px] sm:text-xs text-slate-400">
+                <div class="flex space-x-3 text-slate-300">
+                    <a href="#" class="hover:text-ranah-gold"><i data-lucide="instagram" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></a>
+                    <a href="#" class="hover:text-ranah-gold"><i data-lucide="youtube" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></a>
+                    <a href="#" class="hover:text-ranah-gold"><i data-lucide="facebook" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></a>
+                    <a href="#" class="hover:text-ranah-gold"><i data-lucide="twitter" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></a>
+                </div>
+                <span class="text-center sm:text-left">&copy; 2026 RanahKita. Semua hak dilindungi.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Favorites Modal -->
+    <div id="fav-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative border border-ranah-gold/30">
+            <button onclick="toggleFavoritesModal()" class="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+            <h3 class="text-lg sm:text-xl font-serif font-bold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2">
+                <i data-lucide="heart" class="text-red-500 fill-red-500 w-4 sm:w-5 h-4 sm:h-5"></i>
+                <span>Kota Favorit Saya</span>
+            </h3>
+            <div id="fav-list" class="space-y-2 sm:space-y-3 max-h-80 overflow-y-auto pr-1 text-xs sm:text-sm"></div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-ranah-dark text-white border border-ranah-gold/40 px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+        <i data-lucide="info" class="w-4 h-4 sm:w-5 sm:h-5 text-ranah-gold"></i>
+        <span id="toast-message" class="text-xs sm:text-sm font-semibold">Notifikasi</span>
+    </div>
+
+    <!-- JavaScript Dataset & App Controller -->
+    <script>
+        
+        // Dataset for West Sumatra Cities
+        const citiesData = [
+            {
+                id: "bukittinggi",
+                name: "Bukittinggi",
+                nickname: "Kota Jam Gadang",
+                tagline: "Jam Gadang, Sejarah, dan Kuliner Legendaris",
+                rating: 4.8,
+                reviews: "120+ ulasan",
+                banner: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Nama Bukittinggi berasal dari lima bukit yang menopang kota ini. Pada masa kolonial Belanda dikenal sebagai Fort de Kock.",
+                    development: "Pernah menjadi Ibu Kota Negara Republik Indonesia pada masa Pemerintahan Darurat Republik Indonesia (PDRI) tahun 1948–1949.",
+                    figures: ["Bung Hatta (Proklamator & Wapres RI Pertama)", "Sutan Sjahrir"]
+                },
+                landmarks: [
+                    {
+                        name: "Jam Gadang",
+                        desc: "Menara jam megah ikon Sumatra Barat yang dibangun tahun 1926.",
+                        fact: "Mesin jam ini setara dan seangkatan dengan Big Ben di London!",
+                        location: "Pusat Kota Bukittinggi",
+                        img: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Ngarai Sianok & Lobang Jepang",
+                        desc: "Lembah hijau terjal nan memesona serta terowongan militer bersejarah.",
+                        fact: "Memiliki 21 lorong rahasia sejarah perang.",
+                        location: "Taman Panorama",
+                        img: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: {
+                    dance: "Tari Piring & Tari Pasambahan",
+                    music: "Saluang & Talempong Pacik",
+                    ceremony: "Batagak Penghulu",
+                    arts: "Ukiran Minang & Tenun Pandai Sikek"
+                },
+                culinary: [
+                    {
+                        name: "Nasi Kapau",
+                        desc: "Sajian khas dengan gulai tambusu dan rempah kaya aroma.",
+                        ingredients: "Beras lokal, usus sapi isi telur, santan, rempah.",
+                        spot: "Pasar Lereng",
+                        spiciness: "Pedas Gurih",
+                        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                dictionary: [
+                    { indo: "Saya", minang: "Ambo / Denai", audioText: "Ambo" },
+                    { indo: "Makan", minang: "Makan", audioText: "Makan" },
+                    { indo: "Terima Kasih", minang: "Tarimo Kasih", audioText: "Tarimo Kasih" }
+                ],
+                folklore: {
+                    title: "Sabai Nan Aluih",
+                    desc: "Kisah keberanian gadis Minang yang membela kehormatan keluarganya.",
+                    moral: "Keteguhan memegang kebenaran dan kesetiaan."
+                },
+                umkm: ["Songket Pandai Sikek", "Keripik Sanjai Balado Nitra", "Mukena Bordir Bukittinggi"],
+                stories: [
+                    { author: "Rahmat", text: "Menikmati senja di Jam Gadang adalah pengalaman tak terlupakan!" }
+                ]
+            },
+            {
+                id: "padang",
+                name: "Padang",
+                nickname: "Kota Bengkuang",
+                tagline: "Pantai, Kuliner, dan Budaya yang Kaya",
+                rating: 4.7,
+                reviews: "98+ ulasan",
+                banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Bermula dari muara Batang Arau yang menjadi pelabuhan rempah perdagangan internasional.",
+                    development: "Pusat ibu kota provinsi dengan pelabuhan legendaris Teluk Bayur.",
+                    figures: ["Marah Roesli", "Rasuna Said", "Prof. Dr. Hamka"]
+                },
+                landmarks: [
+                    {
+                        name: "Jembatan Siti Nurbaya & Gunung Padang",
+                        desc: "Jembatan ikonik dengan panorama sungai Batang Arau dan senja pantai.",
+                        fact: "Latar cerita legenda tragis Siti Nurbaya.",
+                        location: "Muaro Padang",
+                        img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Masjid Raya Sumatra Barat",
+                        desc: "Masjid megah beratap Gonjong Rumah Gadang berarsitektur dunia.",
+                        fact: "Desain tahan gempa dan memenangkan award internasional.",
+                        location: "Jalan Khatib Sulaiman",
+                        img: "https://images.unsplash.com/photo-1590077428593-a55bb07c4665?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: {
+                    dance: "Tari Pasambahan & Gelombang",
+                    music: "Gandang Tasa",
+                    ceremony: "Serak Gulo",
+                    arts: "Bordir & Ukiran Kayu"
+                },
+                culinary: [
+                    {
+                        name: "Rendang Padang",
+                        desc: "Kuliner terlezat dunia berisikan olahan daging kaya rempah khas.",
+                        ingredients: "Daging sapi, santan pekat, cabai, serai, rempah.",
+                        spot: "RM Sederhana / Lamun Cangkuak",
+                        spiciness: "Pedas Mantap",
+                        img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                dictionary: [
+                    { indo: "Berapa harganya?", minang: "Bara ko?", audioText: "Bara ko" },
+                    { indo: "Indah / Bagus", minang: "Rancak", audioText: "Rancak" }
+                ],
+                folklore: {
+                    title: "Malin Kundang",
+                    desc: "Legenda anak durhaka yang dikutuk menjadi batu di Pantai Air Manis.",
+                    moral: "Hormatilah orang tua sepanjang hayat."
+                },
+                umkm: ["Bumbu Rendang Instant", "Batik Tanah Liek", "Kopi Padang"],
+                stories: [
+                    { author: "Rina (28 tahun)", text: "Setiap kali pulang ke Padang, saya selalu merasa rindu dengan aroma rendang yang memenuhi rumah. Itu bukan sekadar makanan, tapi bagian dari identitas kami." }
+                ]
+            },
+            {
+                id: "solok",
+                name: "Solok",
+                nickname: "Kota Beras",
+                tagline: "Keindahan Alam dan Kopi Khas",
+                rating: 4.6,
+                reviews: "76+ ulasan",
+                banner: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Dikenal sebagai lumbung beras ternama Bareh Solok dan kawasan danau kembar.",
+                    development: "Pusat agrowisata dan perkebunan teh serta kopi di kaki Gunung Talang.",
+                    figures: ["Sutan Takdir Alisjahbana"]
+                },
+                landmarks: [
+                    {
+                        name: "Danau Diatas & Danau Dibawah",
+                        desc: "Danau kembar memesona di dataran tinggi yang sejuk.",
+                        fact: "Memiliki suhu pegunungan sejuk alami sepanjang tahun.",
+                        location: "Alahan Panjang, Kab. Solok",
+                        img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: {
+                    dance: "Tari Payung",
+                    music: "Talempong Kayu",
+                    ceremony: "Maroan Rice Harvest Festival",
+                    arts: "Anyaman Pandan"
+                },
+                culinary: [
+                    {
+                        name: "Beras Bareh Solok & Beras Rendang",
+                        desc: "Nasi harum pulen khas Solok dengan lauk pauk tradisional.",
+                        ingredients: "Beras lokal Bareh Solok, rempah.",
+                        spot: "Pasar Solok",
+                        spiciness: "Gurih",
+                        img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                dictionary: [
+                    { indo: "Enak Sekali", minang: "Lamak bana", audioText: "Lamak bana" }
+                ],
+                folklore: {
+                    title: "Legenda Danau Kembar",
+                    desc: "Kisah terbentuknya danau kembar nan anggun di lereng Gunung Talang.",
+                    moral: "Menjaga kelestarian alam ciptaan Tuhan."
+                },
+                umkm: ["Beras Bareh Solok", "Kopi Cap Solok Radjo", "Teh Kayu Aro"],
+                stories: [
+                    { author: "Bambang", text: "Kebun teh dan pemandangan Danau Diatas di Solok sangat menenangkan jiwa!" }
+                ]
+            },
+            {
+                id: "payakumbuh",
+                name: "Payakumbuh",
+                nickname: "Kota Batiah",
+                tagline: "Kuliner Tradisional & Gerbang Lembah Harau",
+                rating: 4.7,
+                reviews: "85+ ulasan",
+                banner: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Kawasan dataran subur Luak Limopuluah yang terkenal dengan masakan dan camilan khas.",
+                    development: "Persinggahan penting jalur perdagangan darat Riau - Sumatra Barat.",
+                    figures: ["Tan Malaka (Bapak Republik Indonesia)"]
+                },
+                landmarks: [
+                    {
+                        name: "Lembah Harau",
+                        desc: "Ngarai granit raksasa bertebing terjal setinggi ratusan meter.",
+                        fact: "Dijuluki Yosemite-nya Indonesia!",
+                        location: "Kab. Lima Puluh Kota",
+                        img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: { dance: "Tari Randai", music: "Talempong Gojo", ceremony: "Alek Nagari", arts: "Batiah & Anyaman Bambu" },
+                culinary: [{ name: "Martabak Kubang & Batiah", desc: "Camilan beras ketan gurih renyah khas Payakumbuh.", ingredients: "Beras ketan, gula, minyak.", spot: "Pusat Kota Payakumbuh", spiciness: "Manis Gurih", img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Bagus Sekali", minang: "Rancak bana", audioText: "Rancak bana" }],
+                folklore: { title: "Kisah Tebing Harau", desc: "Mitos pesona tebing batu kapur pelindung nagari.", moral: "Menjaga warisan nenek moyang." },
+                umkm: ["Batiah Payakumbuh", "Galamai Lembut", "Kopi Kawa Daun"],
+                stories: [{ author: "Fajri", text: "Kawa daun di Lembah Harau hangatnya pas sekali!" }]
+            },
+            {
+                id: "sawahlunto",
+                name: "Sawahlunto",
+                nickname: "Heritage City",
+                tagline: "Kota Tambang Batubara Tua Warisan UNESCO",
+                rating: 4.8,
+                reviews: "64+ ulasan",
+                banner: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Ditemukan oleh pakar geologi Belanda abad 19 karena cadangan batubara raksasa.",
+                    development: "Diakui UNESCO sebagai World Cultural Heritage Ombilin Coal Mining.",
+                    figures: ["Prof. Mohammad Yamin (Pencetus Sumpah Pemuda)", "Adinegoro"]
+                },
+                landmarks: [
+                    {
+                        name: "Lubang Tambang Mbah Soero",
+                        desc: "Terowongan bersejarah bekas tambang batubara era kolonial Belanda.",
+                        fact: "Dinamai dari Mbah Soero, mandor tambang yang disegani.",
+                        location: "Kota Tua Sawahlunto",
+                        img: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: { dance: "Tari Kuda Lumping Multietnis", music: "Wayang & Talempong", ceremony: "Makan Bajamba", arts: "Songket Silungkang" },
+                culinary: [{ name: "Dendeng Batokok Sawahlunto", desc: "Dendeng sapi dipukul pipih beraroma asap lezat.", ingredients: "Daging sapi, cabai hijau, rempah.", spot: "Kota Tua", spiciness: "Pedas Gurih", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Kawan", minang: "Kawan", audioText: "Kawan" }],
+                folklore: { title: "Orang Rantai Ombilin", desc: "Kisah ketahanan para pekerja tambang dari berbagai suku.", moral: "Persatuan dalam keberagaman." },
+                umkm: ["Songket Silungkang", "Kopi Ombilin", "Kerajinan Batu Batubara"],
+                stories: [{ author: "Hendra", text: "Kota tua Sawahlunto serasa museum hidup!" }]
+            },
+            {
+                id: "pariaman",
+                name: "Pariaman",
+                nickname: "Kota Tabuik",
+                tagline: "Wisata Bahari Pesisir dan Festival Tabuik Megah",
+                rating: 4.7,
+                reviews: "92+ ulasan",
+                banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+                history: {
+                    origin: "Kota pesisir pantai barat yang bermakna 'Barangsiapa yang datang akan aman'.",
+                    development: "Pusat penyebaran agama Islam awal oleh Syekh Burhanuddin.",
+                    figures: ["Syekh Burhanuddin Ulakan", "Bagindo Azizchan"]
+                },
+                landmarks: [
+                    {
+                        name: "Pantai Gandoriah & Pulau Angso Duo",
+                        desc: "Pantai pasir putih eksotis pusat prosesi puncak Pesta Budaya Tabuik.",
+                        fact: "Menjadi tempat pelarungan menara Tabuik ke laut lepas.",
+                        location: "Pusat Pariaman",
+                        img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                culture: { dance: "Tari Indang Pariaman", music: "Gandang Tasa Piaman", ceremony: "Pesta Budaya Tabuik", arts: "Sulam Bayang" },
+                culinary: [{ name: "Nasi Sek & Sala Lauak", desc: "Gorengan adonan tepung beras dan daging ikan renyah.", ingredients: "Tepung beras, ikan, kunyit, cabai.", spot: "Pantai Gandoriah", spiciness: "Gurih Pedas", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Besok", minang: "Bisuak", audioText: "Bisuak" }],
+                folklore: { title: "Anggun Nan Tongga", desc: "Kisah petualangan pemuda bahari mengarungi lautan.", moral: "Keberanian dan keteguhan janji." },
+                umkm: ["Sulam Bayang Piaman", "Kue Sala Lauak", "Kerajinan Kerang"],
+                stories: [{ author: "Anisa", text: "Pelarungan Tabuik di Pariaman seru sekali!" }]
+            },
+            {
+                id: "padangpanjang",
+                name: "Padang Panjang",
+                nickname: "Serambi Mekkah",
+                tagline: "Kota Hujan dan Pusat Pendidikan Seni Minang",
+                rating: 4.6,
+                reviews: "70+ ulasan",
+                banner: "https://images.unsplash.com/photo-1590077428593-a55bb07c4665?auto=format&fit=crop&w=1200&q=80",
+                history: { origin: "Kota berudara sejuk di celah Gunung Marapi dan Singgalang.", development: "Pusat perguruan Islam bersejarah dan Institut Seni Indonesia (ISI).", figures: ["Rahmah El Yunusiyyah"] },
+                landmarks: [{ name: "Pusat Dokumentasi & Informasi Kebudayaan Minangkabau (PDIKM)", desc: "Rumah Gadang megah museum arsip sejarah Minang.", fact: "Menyimpan koleksi pustaka kuno abad 19.", location: "Padang Panjang", img: "https://images.unsplash.com/photo-1590077428593-a55bb07c4665?auto=format&fit=crop&w=600&q=80" }],
+                culture: { dance: "Tari Gelombang ISI", music: "Gamelan Minang", ceremony: "Khatam Al-Quran", arts: "Seni Karawitan" },
+                culinary: [{ name: "Sate Mak Syukur", desc: "Sate sapi kuah kuning kental berbumbu rempah tajam.", ingredients: "Daging sapi, kuah tepung beras, rempah.", spot: "Sate Mak Syukur", spiciness: "Pedas Warm", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Pergi", minang: "Pai", audioText: "Pai" }],
+                folklore: { title: "Kisah Marapi Singgalang", desc: "Mitos dua gunung pelindung Serambi Mekkah.", moral: "Keharmonisan dengan alam." },
+                umkm: ["Sate Mak Syukur Instant", "Kerajinan Ukir PDIKM"],
+                stories: [{ author: "Deni", text: "Makan Sate Mak Syukur saat cuaca dingin padang panjang luar biasa enak!" }]
+            },
+            {
+                id: "solokselatan",
+                name: "Solok Selatan",
+                nickname: "Nagari 1000 Rumah Gadang",
+                tagline: "Kawasan Perkampungan Adat Utuh Terpanjang",
+                rating: 4.8,
+                reviews: "58+ ulasan",
+                banner: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=1200&q=80",
+                history: { origin: "Kawasan bersejarah perkampungan adat Minang di hulu sungai Batanghari.", development: "Situs cagar budaya unik rumah adat terpelihara.", figures: ["Pahlawan Lokal Solok Selatan"] },
+                landmarks: [{ name: "Kawasan Saribu Rumah Gadang", desc: "Ratusan Rumah Gadang kuno yang masih dihuni warga.", fact: "Pernah jadi lokasi syuting film nasional ternama.", location: "Koto Baru", img: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=600&q=80" }],
+                culture: { dance: "Tari Batanghari", music: "Talempong Kayu", ceremony: "Batagak Rumah", arts: "Ukir Kayu Tradisional" },
+                culinary: [{ name: "Pangek Pokan", desc: "Olahan ikan dengan kuah kuning pekat khas Solok Selatan.", ingredients: "Ikan, kunyit, santan, cabai.", spot: "Muara Labuh", spiciness: "Pedas Gurih", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Rumah", minang: "Rumah / Rumah Gadang", audioText: "Rumah" }],
+                folklore: { title: "Legenda Batanghari", desc: "Kisah sungai penghubung perdagangan Minang.", moral: "Persaudaraan antardesa." },
+                umkm: ["Kopi Kerinci Solok Selatan", "Miniatur Rumah Gadang"],
+                stories: [{ author: "Siti", text: "Menginap di Saribu Rumah Gadang rasanya kembali ke masa lalu!" }]
+            },
+            {
+                id: "pasaman",
+                name: "Pasaman",
+                nickname: "Kota Khatulistiwa",
+                tagline: "Garis Khatulistiwa & Sejarah Perjuangan Tuanku Imam Bonjol",
+                rating: 4.7,
+                reviews: "51+ ulasan",
+                banner: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+                history: { origin: "Kawasan perbatasan utara tempat melintasnya garis katulistiwa.", development: "Markas basis perjuangan Perang Padri.", figures: ["Tuanku Imam Bonjol"] },
+                landmarks: [{ name: "Tugu Equator Bonjol & Museum Imam Bonjol", desc: "Tugu titik nol khatulistiwa dan museum pahlawan nasional.", fact: "Dapat berdiri persis melintasi garis tengah bumi!", location: "Bonjol, Pasaman", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" }],
+                culture: { dance: "Tari Ronggeng Pasaman", music: "Gendang 9", ceremony: "Alek Khatulistiwa", arts: "Anyaman Rotan" },
+                culinary: [{ name: "Ikan Asam Padeh Pasaman", desc: "Ikan segar dengan kuah asam pedas tanpa santan.", ingredients: "Ikan, cabai merah, asam kandis.", spot: "Bonjol", spiciness: "Asam Pedas Segar", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80" }],
+                dictionary: [{ indo: "Matahari", minang: "Matari", audioText: "Matari" }],
+                folklore: { title: "Perjuangan Imam Bonjol", desc: "Kisah patriotisme melawan ketidakadilan colonial.", moral: "Cinta tanah air dan keberanian." },
+                umkm: ["Kopi Robusta Pasaman", "Souvenir Tugu Equator"],
+                stories: [{ author: "Taufik", text: "Sensasi melintasi garis khatulistiwa di Bonjol sangat seru!" }]
+            }
+        ];
+
+        // Festivals Events Dataset
+        const festivalEvents = [
+            { id: "tabuik", name: "Festival Tabuik", city: "Pariaman", date: "10 – 12 Juli 2026", location: "Pantai Gandoriah, Pariaman", featured: true, img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80", desc: "Perayaan budaya memperingati Asyura dengan prosesi pengarakan menara Tabuik setinggi 12 meter hingga dilarungkan ke tengah lautan." },
+            { id: "randai", name: "Festival Randai", city: "Padang", date: "15 Agustus 2026", location: "Taman Budaya Padang", featured: false, img: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=600&q=80", desc: "Seni pertunjukan teater tradisi Minangkabau mengabungkan tarian, silat, nyanyian, dan cerita naratif." },
+            { id: "serdadu", name: "Festival Serdadu – Serdadu", city: "Solok", date: "20 September 2026", location: "Alahan Panjang, Solok", featured: false, img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80", desc: "Pesta seni rakyat bernuansa agraris di tepi danau kembar Solok." },
+            { id: "kuliner", name: "Festival Kuliner Minang", city: "Bukittinggi", date: "5 Oktober 2026", location: "Pelataran Jam Gadang", featured: false, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80", desc: "Pameran akbar ratusan jenis masakan autentik rempah dari seluruh pelosok Minangkabau." }
+        ];
+
+        // Articles Dataset
+        const articlesList = [
+            { id: 1, title: "Mengenal Tari Piring, Kesenian Tradisional dari Sumatra Barat", date: "12 Mei 2026", img: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=300&q=80" },
+            { id: 2, title: "Sejarah Jam Gadang, Ikon Kebanggaan Bukittinggi", date: "8 Mei 2026", img: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=300&q=80" },
+            { id: 3, title: "5 Kuliner Minang yang Wajib Dicoba Saat Berkunjung ke Padang", date: "3 Mei 2026", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=300&q=80" }
+        ];
+
+        // Quiz Questions Dataset
+        const quizQuestions = [
+            { question: "Di kota manakah menara Jam Gadang berada?", options: ["Padang", "Bukittinggi", "Payakumbuh", "Solok"], answer: 1 },
+            { question: "Seni pertunjukan teater khas Minangkabau yang menggabungkan tarian, silat, dan musik dinamakan?", options: ["Tari Piring", "Randai", "Tabuik", "Gadang"], answer: 1 },
+            { question: "Kota di Sumatra Barat yang ditetapkan sebagai Warisan Dunia UNESCO kategori tambang batubara adalah?", options: ["Sawahlunto", "Pariaman", "Pasaman", "Padang Panjang"], answer: 0 },
+            { question: "Makanan terlezat dunia asal Sumatra Barat yang terbuat dari daging sapi dan santan rempah pekat adalah?", options: ["Sate Padang", "Rendang", "Soto Padang", "Nasi Sek"], answer: 1 }
+        ];
+
+        // App State Persistence
+        let favorites = JSON.parse(localStorage.getItem('rk_favorites') || '[]');
+        let userScore = parseInt(localStorage.getItem('rk_score') || '0');
+
+        // Navigation Controller
+        function navigateTo(page, param = null) {
+            const container = document.getElementById('app-container');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Reset Nav Bar Styling
+            ['home', 'cities', 'culture', 'culinary', 'calendar', 'about'].forEach(id => {
+                const el = document.getElementById(`nav-${id}`);
+                if (el) {
+                    if (id === page) {
+                        el.className = "text-ranah-gold hover:text-amber-300 transition border-b-2 border-ranah-gold pb-1";
+                    } else {
+                        el.className = "hover:text-ranah-gold transition text-slate-200 pb-1";
+                    }
+                }
+            });
+
+            if (page === 'home') {
+                container.innerHTML = renderHomePage();
+            } else if (page === 'cities') {
+                container.innerHTML = renderCitiesPage();
+            } else if (page === 'culture') {
+                container.innerHTML = renderCulturePage();
+            } else if (page === 'culinary') {
+                container.innerHTML = renderCulinaryPage();
+            } else if (page === 'calendar') {
+                container.innerHTML = renderCalendarPage();
+            } else if (page === 'quiz') {
+                container.innerHTML = renderQuizPage();
+                initQuiz();
+            } else if (page === 'about') {
+                container.innerHTML = renderAboutPage();
+            } else if (page === 'city' && param) {
+                const city = citiesData.find(c => c.id === param);
+                if (city) {
+                    container.innerHTML = renderCityDetailPage(city);
+                }
+            }
+
+            lucide.createIcons();
+            updateFavBadge();
+            document.getElementById('header-score').textContent = `${userScore} XP`;
+        }
+
+        function openCity(cityId) {
+            navigateTo('city', cityId);
+        }
+
+        // Toggles & Modal Helpers
+        function toggleFavoritesModal() {
+            const modal = document.getElementById('fav-modal');
+            modal.classList.toggle('hidden');
+            renderFavoritesList();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleFavorite(cityId) {
+            if (favorites.includes(cityId)) {
+                favorites = favorites.filter(id => id !== cityId);
+                showToast("Kota dihapus dari favorit.");
+            } else {
+                favorites.push(cityId);
+                showToast("Kota ditambahkan ke favorit!");
+            }
+            localStorage.setItem('rk_favorites', JSON.stringify(favorites));
+            updateFavBadge();
+        }
+
+        function updateFavBadge() {
+            const badge = document.getElementById('fav-count');
+            if (favorites.length > 0) {
+                badge.textContent = favorites.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function renderFavoritesList() {
+            const list = document.getElementById('fav-list');
+            if (favorites.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada kota favorit yang disimpan.</p>`;
+                return;
+            }
+
+            let html = '';
+            favorites.forEach(id => {
+                const city = citiesData.find(c => c.id === id);
+                if (city) {
+                    html += `
+                        <div class="flex items-center justify-between p-3 rounded-2xl bg-ranah-cream border border-slate-200">
+                            <div class="flex items-center gap-3">
+                                <img src="${city.banner}" class="w-12 h-12 rounded-xl object-cover" />
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-xs">${city.name}</h4>
+                                    <p class="text-[10px] text-ranah-textMuted">${city.nickname}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openCity('${city.id}'); toggleFavoritesModal()" class="px-3 py-1 bg-ranah-dark text-ranah-gold rounded-lg text-xs font-semibold hover:bg-ranah-green">Buka</button>
+                                <button onclick="toggleFavorite('${city.id}'); renderFavoritesList()" class="p-1 text-red-500 hover:bg-red-50 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            list.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+                showToast(`Pengucapan: "${text}"`);
+            } else {
+                showToast("Fitur audio tidak didukung di browser ini.");
+            }
+        }
+
+        // ------------------ PAGE VIEW RENDERERS ------------------ //
+
+        // 1. HOME PAGE (MATCHING IMAGE EXACTLY)
+        function renderHomePage() {
+            return `
+                <!-- HERO SECTION -->
+                <section class="gradient-hero text-white py-16 sm:py-24 md:py-32 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden shadow-2xl">
+                    <div class="max-w-7xl mx-auto relative z-10 flex flex-col items-start justify-center space-y-4 sm:space-y-6">
+                        <!-- Subtitle Badge -->
+                        <div class="inline-flex items-center gap-2 text-ranah-gold text-xs sm:text-sm font-bold tracking-wider">
+                            <span>✨ Selamat Datang di RanahKita</span>
+                        </div>
+
+                        <!-- Main Heading -->
+                        <h1 class="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight leading-tight max-w-3xl">
+                            Jelajahi Keindahan <br/>
+                            <span class="text-ranah-gold italic font-normal">Sumatera Barat</span>
+                        </h1>
+
+                        <!-- Lead Text -->
+                        <p class="text-xs sm:text-base md:text-lg lg:text-xl text-slate-200 max-w-2xl font-light leading-relaxed">
+                            Temukan cerita, budaya, kuliner, dan warisan berharga dari setiap kota di Sumatera Barat.
+                        </p>
+
+                        <!-- CTA Button -->
+                        <div class="pt-2 sm:pt-4">
+                            <button onclick="navigateTo('cities')" class="bg-ranah-gold hover:bg-ranah-goldHover text-ranah-dark font-extrabold px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-2xl transition duration-300 flex items-center gap-2 sm:gap-3 text-xs sm:text-sm tracking-wide">
+                                <span>Jelajahi Kota</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Right Caption & Controls -->
+                    <div class="absolute bottom-4 sm:bottom-6 lg:bottom-12 right-3 sm:right-6 lg:right-12 z-20 hidden sm:flex items-center gap-2 sm:gap-4 bg-ranah-dark/80 backdrop-blur-md px-3 sm:px-5 py-2 rounded-full border border-ranah-gold/30 text-xs font-semibold">
+                        <span class="text-slate-200 hidden md:block">Rumah Gadang, Bukittinggi</span>
+                        <div class="flex items-center gap-0.5 sm:gap-1 border-l border-white/20 pl-2 sm:pl-3">
+                            <button class="p-0.5 sm:p-1 text-slate-300 hover:text-ranah-gold"><i data-lucide="chevron-left" class="w-3 h-3 sm:w-4 sm:h-4"></i></button>
+                            <button class="p-0.5 sm:p-1 text-slate-300 hover:text-ranah-gold"><i data-lucide="chevron-right" class="w-3 h-3 sm:w-4 sm:h-4"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MIDDLE SECTION: MAP (COL 1), CITIES GRID (COL 2), UPCOMING FESTIVALS (COL 3) -->
+                <section class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-14">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+                        
+                        <!-- COLUMN 1: PETA INTERAKTIF SUMATERA BARAT (4 COLS) -->
+                        <div class="lg:col-span-4 bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-200/80 space-y-3 sm:space-y-4 flex flex-col justify-between h-full">
+                            <div>
+                                <h2 class="text-lg sm:text-xl font-serif font-bold text-slate-900">Peta Interaktif Sumatera Barat</h2>
+                                <p class="text-xs text-ranah-textMuted mt-1 leading-relaxed">
+                                    Klik pada kota untuk menjelajahi lebih banyak informasi mengenai budaya, sejarah, kuliner, dan lainnya.
+                                </p>
+                            </div>
+
+                            <!-- Vector Map Graphic Simulation -->
+                            <div class="relative w-full h-64 sm:h-80 bg-emerald-50/50 rounded-2xl border border-emerald-100 flex items-center justify-center p-3 sm:p-4 overflow-hidden my-1 sm:my-2">
+                                <div class="absolute inset-0 bg-motif"></div>
+                                
+                                <!-- Stylized SVG Map Shape of West Sumatra -->
+                                <svg viewBox="0 0 300 350" class="w-full h-full drop-shadow-md">
+                                    <path d="M 110,20 L 150,40 L 190,90 L 180,140 L 220,180 L 210,240 L 180,290 L 140,320 L 110,280 L 120,220 L 90,180 L 70,120 L 90,60 Z" fill="#88b598" stroke="#4a8b65" stroke-width="3" />
+                                    <path d="M 50,180 L 80,220 L 60,260 L 30,220 Z" fill="#a2c8af" stroke="#4a8b65" stroke-width="2" />
+                                </svg>
+
+                                <!-- City Map Pins -->
+                                <button onclick="openCity('pasaman')" class="absolute top-[18%] left-[32%] group" title="Pasaman">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Pasaman
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('bukittinggi')" class="absolute top-[32%] left-[52%] group" title="Bukittinggi">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Bukittinggi
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('padangpanjang')" class="absolute top-[42%] left-[54%] group" title="Padang Panjang">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Padang Panjang
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('pariaman')" class="absolute top-[48%] left-[28%] group" title="Pariaman">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Pariaman
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('padang')" class="absolute top-[40%] left-[25%] group" title="Padang">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Padang
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('solok')" class="absolute top-[58%] left-[58%] group" title="Solok">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Solok
+                                    </div>
+                                </button>
+
+                                <button onclick="openCity('solokselatan')" class="absolute top-[72%] left-[62%] group" title="Solok Selatan">
+                                    <div class="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full shadow text-[10px] font-bold text-slate-800 border border-emerald-400 group-hover:bg-ranah-gold">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Solok Selatan
+                                    </div>
+                                </button>
+
+                                <!-- Compass Rose Icon -->
+                                <div class="absolute bottom-3 left-3 w-8 h-8 rounded-full bg-white/90 border border-slate-300 flex items-center justify-center text-slate-700 font-bold text-[10px]">
+                                    N 🧭
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 2: KOTA - KOTA DI SUMATERA BARAT (5 COLS) -->
+                        <div class="lg:col-span-5 space-y-3 sm:space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-lg sm:text-xl font-serif font-bold text-slate-900">Kota - Kota di Sumatera Barat</h2>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                                ${citiesData.slice(0, 9).map(city => `
+                                    <div onclick="openCity('${city.id}')" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+                                        <div class="h-20 sm:h-24 overflow-hidden relative">
+                                            <img src="${city.banner}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                                            <span class="absolute bottom-1 right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-ranah-dark text-white flex items-center justify-center text-[8px] sm:text-[9px]">➔</span>
+                                        </div>
+                                        <div class="p-2 sm:p-2.5 space-y-0.5 sm:space-y-1">
+                                            <h4 class="font-bold text-slate-900 text-xs sm:text-sm">${city.name}</h4>
+                                            <p class="text-[8px] sm:text-[9px] text-slate-500 line-clamp-1">${city.tagline}</p>
+                                            <div class="flex items-center gap-0.5 text-[8px] sm:text-[9px] text-amber-600 font-bold">
+                                                <span>★ ${city.rating}</span>
+                                                <span class="text-slate-400 font-normal">(${city.reviews})</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="pt-1 sm:pt-2 text-right">
+                                <button onclick="navigateTo('cities')" class="text-xs font-bold text-slate-700 hover:text-ranah-gold inline-flex items-center gap-1">
+                                    <span>Lihat Semua Kota</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 3: FESTIVAL TERDEKAT (3 COLS) -->
+                        <div class="lg:col-span-3 space-y-3 sm:space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-lg sm:text-xl font-serif font-bold text-slate-900">Festival Terdekat</h2>
+                                <button onclick="navigateTo('calendar')" class="text-xs font-bold text-slate-600 hover:text-ranah-gold flex items-center gap-1">
+                                    Lihat Semua <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+
+                            <!-- Featured Main Festival Card -->
+                            <div class="bg-amber-100/60 rounded-3xl p-3 sm:p-4 border border-amber-200/80 space-y-2 sm:space-y-3 relative overflow-hidden shadow-sm">
+                                <div class="h-24 sm:h-32 rounded-2xl overflow-hidden relative">
+                                    <img src="${festivalEvents[0].img}" class="w-full h-full object-cover" />
+                                </div>
+                                <div class="space-y-1">
+                                    <h3 class="font-serif font-bold text-slate-900 text-base">${festivalEvents[0].name}</h3>
+                                    <p class="text-xs text-slate-600 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 text-red-500"></i> ${festivalEvents[0].city}</p>
+                                    <p class="text-xs text-slate-600 flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3 text-amber-700"></i> ${festivalEvents[0].date}</p>
+                                </div>
+                                <button onclick="navigateTo('calendar')" class="w-full py-2 bg-ranah-gold hover:bg-ranah-goldHover text-ranah-dark font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                                    <span>Lihat Detail</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- List Upcoming Festivals -->
+                            <div class="space-y-1.5 sm:space-y-2.5 pt-0.5 sm:pt-1">
+                                ${festivalEvents.slice(1, 4).map(ev => `
+                                    <div onclick="navigateTo('calendar')" class="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200/80 flex items-center gap-2 sm:gap-3 cursor-pointer hover:border-ranah-gold transition">
+                                        <img src="${ev.img}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover shrink-0" />
+                                        <div class="overflow-hidden">
+                                            <h4 class="font-bold text-slate-800 text-xs truncate">${ev.name}</h4>
+                                            <p class="text-[8px] sm:text-[10px] text-slate-500 flex items-center gap-1"><i data-lucide="map-pin" class="w-2 h-2 sm:w-2.5 sm:h-2.5 text-slate-400"></i> ${ev.city}</p>
+                                            <p class="text-[8px] sm:text-[10px] text-slate-500 flex items-center gap-1"><i data-lucide="calendar" class="w-2 h-2 sm:w-2.5 sm:h-2.5 text-slate-400"></i> ${ev.date}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- DARK BANNER: WARISAN BUDAYA SUMATERA BARAT -->
+                <section class="bg-ranah-dark text-white py-12 sm:py-16 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden my-6 sm:my-8 shadow-2xl border-y border-ranah-green">
+                    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 relative z-10">
+                        
+                        <!-- Left Heading & CTA -->
+                        <div class="space-y-3 sm:space-y-4 max-w-xl text-center lg:text-left">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white">Warisan Budaya <br/>Sumatera Barat</h2>
+                            <p class="text-slate-300 text-xs sm:text-sm font-light leading-relaxed">
+                                Dari sejarah panjang hingga tradisi yang terus hidup, semua ada di sini.
+                            </p>
+                            <div class="pt-1 sm:pt-2">
+                                <button onclick="navigateTo('culture')" class="bg-ranah-gold hover:bg-ranah-goldHover text-ranah-dark font-extrabold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs transition flex items-center gap-1.5 sm:gap-2 mx-auto lg:mx-0 shadow-lg">
+                                    <span>Pelajari Lebih Lanjut</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Stats Items -->
+                        <div class="grid grid-cols-2.5 sm:grid-cols-5 gap-3 sm:gap-6 md:gap-8 w-full lg:w-auto text-center">
+                            <div class="space-y-2">
+                                <div class="w-10 sm:w-14 h-10 sm:h-14 mx-auto rounded-full border border-ranah-gold/50 bg-ranah-green/50 flex items-center justify-center text-ranah-gold text-lg sm:text-xl">🏛️</div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">10</h3>
+                                <p class="text-[9px] sm:text-[11px] text-slate-300 font-medium">Kota</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-10 sm:w-14 h-10 sm:h-14 mx-auto rounded-full border border-ranah-gold/50 bg-ranah-green/50 flex items-center justify-center text-ranah-gold text-lg sm:text-xl">📜</div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">50+</h3>
+                                <p class="text-[9px] sm:text-[11px] text-slate-300 font-medium">Cerita Budaya</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-10 sm:w-14 h-10 sm:h-14 mx-auto rounded-full border border-ranah-gold/50 bg-ranah-green/50 flex items-center justify-center text-ranah-gold text-lg sm:text-xl">🍛</div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">100+</h3>
+                                <p class="text-[9px] sm:text-[11px] text-slate-300 font-medium">Kuliner Khas</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="w-10 sm:w-14 h-10 sm:h-14 mx-auto rounded-full border border-ranah-gold/50 bg-ranah-green/50 flex items-center justify-center text-ranah-gold text-lg sm:text-xl">🎭</div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">20+</h3>
+                                <p class="text-[9px] sm:text-[11px] text-slate-300 font-medium">Festival Tahunan</p>
+                            </div>
+                            <div class="space-y-2 col-span-2 sm:col-span-1">
+                                <div class="w-10 sm:w-14 h-10 sm:h-14 mx-auto rounded-full border border-ranah-gold/50 bg-ranah-green/50 flex items-center justify-center text-ranah-gold text-lg sm:text-xl">🛍️</div>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">200+</h3>
+                                <p class="text-[9px] sm:text-[11px] text-slate-300 font-medium">UMKM Lokal</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- BOTTOM HIGHLIGHTS GRID: KOTA POPULER (COL 1), CERITA DAR WARGA (COL 2), ARTIKEL TERBARU (COL 3) -->
+                <section class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+                        
+                        <!-- COLUMN 1: KOTA POPULER (5 COLS) -->
+                        <div class="lg:col-span-5 space-y-3 sm:space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg sm:text-lg font-serif font-bold text-slate-900">Kota Populer</h3>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                                ${citiesData.slice(0, 3).map(city => `
+                                    <div onclick="openCity('${city.id}')" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+                                        <div class="h-24 overflow-hidden relative">
+                                            <img src="${city.banner}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                                            <span class="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-ranah-dark text-white flex items-center justify-center text-[9px]">➔</span>
+                                        </div>
+                                        <div class="p-2.5 space-y-1">
+                                            <h4 class="font-bold text-slate-900 text-xs">${city.name}</h4>
+                                            <p class="text-[9px] text-slate-500 line-clamp-1">${city.tagline}</p>
+                                            <div class="flex items-center gap-1 text-[9px] text-amber-600 font-bold">
+                                                <span>★ ${city.rating}</span>
+                                                <span class="text-slate-400 font-normal">(${city.reviews})</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 2: CERITA DARI WARGA (4 COLS) -->
+                        <div class="lg:col-span-4 space-y-4">
+                            <h3 class="text-lg font-serif font-bold text-slate-900">Cerita dari Warga</h3>
+                            <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4 relative flex flex-col justify-between h-[210px]">
+                                <div class="flex items-start gap-3">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="w-12 h-12 rounded-full object-cover shrink-0 border border-amber-300" />
+                                    <p class="text-xs text-slate-600 italic leading-relaxed">
+                                        "Setiap kali pulang ke Padang, saya selalu merasa rindu dengan aroma rendang yang memenuhi rumah. Itu bukan sekadar makanan, tapi bagian dari identitas kami."
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between border-t border-slate-100 pt-3">
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-800">— Rina, 28 tahun</p>
+                                        <p class="text-[10px] text-slate-400">Warga Padang</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex space-x-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-ranah-gold"></span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                        </div>
+                                        <div class="flex space-x-1 text-slate-400">
+                                            <button class="hover:text-slate-700"><i data-lucide="chevron-left" class="w-3.5 h-3.5"></i></button>
+                                            <button class="hover:text-slate-700"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 3: ARTIKEL TERBARU (3 COLS) -->
+                        <div class="lg:col-span-3 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-serif font-bold text-slate-900">Artikel Terbaru</h3>
+                                <button onclick="navigateTo('culture')" class="text-xs font-bold text-slate-600 hover:text-ranah-gold flex items-center gap-1">
+                                    Lihat Semua <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+                            <div class="space-y-3">
+                                ${articlesList.map(art => `
+                                    <div onclick="navigateTo('culture')" class="flex items-center gap-3 cursor-pointer group">
+                                        <img src="${art.img}" class="w-14 h-12 rounded-xl object-cover shrink-0 group-hover:opacity-90 transition" />
+                                        <div>
+                                            <h4 class="text-xs font-bold text-slate-800 line-clamp-2 leading-tight group-hover:text-ranah-gold transition">${art.title}</h4>
+                                            <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-2.5 h-2.5"></i> ${art.date}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            `;
+        }
+
+        // 2. CITIES PAGE
+        function renderCitiesPage() {
+            return `
+                <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+                    <div>
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Jelajahi Daerah</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Kota & Kabupaten di Sumatra Barat</h1>
+                        <p class="text-xs text-ranah-textMuted mt-1">Temukan keunikan sejarah, landmark ikonik, kuliner khas, dan adat tradisi dari tiap daerah.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        ${citiesData.map(city => `
+                            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200/80 hover:shadow-xl transition flex flex-col justify-between group">
+                                <div>
+                                    <div class="h-40 sm:h-48 overflow-hidden relative">
+                                        <img src="${city.banner}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                                        <button onclick="toggleFavorite('${city.id}')" class="absolute top-2 sm:top-3 right-2 sm:right-3 p-1.5 sm:p-2 rounded-full bg-white/80 hover:bg-white text-slate-700 transition">
+                                            <i data-lucide="heart" class="w-3.5 h-3.5 sm:w-4 sm:h-4 ${favorites.includes(city.id) ? 'text-red-500 fill-red-500' : ''}"></i>
+                                        </button>
+                                        <span class="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 bg-ranah-dark/90 text-ranah-gold text-[9px] sm:text-[10px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-ranah-gold/30">
+                                            ${city.nickname}
+                                        </span>
+                                    </div>
+                                    <div class="p-4 sm:p-6 space-y-2 sm:space-y-3">
+                                        <h3 class="text-lg sm:text-2xl font-serif font-bold text-slate-900">${city.name}</h3>
+                                        <p class="text-xs text-slate-600 line-clamp-2">${city.tagline}</p>
+                                        <div class="space-y-0.5 pt-1 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-[11px] text-slate-500">
+                                            <p>🏛️ <strong>Landmark:</strong> ${city.landmarks[0]?.name}</p>
+                                            <p>🍛 <strong>Kuliner:</strong> ${city.culinary[0]?.name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+                                    <button onclick="openCity('${city.id}')" class="w-full py-2.5 sm:py-3 bg-ranah-dark hover:bg-ranah-green text-ranah-gold font-bold text-xs sm:text-xs rounded-2xl transition flex items-center justify-center gap-1.5 sm:gap-2">
+                                        <span>Buka Halaman Kota</span>
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. CULTURE PAGE
+        function renderCulturePage() {
+            return `
+                <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-8 sm:space-y-12">
+                    <div>
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Warisan Leluhur</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Kebudayaan & Tradisi Minangkabau</h1>
+                        <p class="text-xs text-ranah-textMuted mt-1">Falsafah hidup "Adat Basandi Syarak, Syarak Basandi Kitabullah" dan ragam karya seni bernilai tinggi.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                            <div class="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg sm:text-2xl">💃</div>
+                            <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900">Tari Tradisional</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Tari Piring, Tari Pasambahan, Tari Payung, dan Tari Indang Pariaman dengan keanggunan gerakan khas.</p>
+                        </div>
+                        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                            <div class="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg sm:text-2xl">🎵</div>
+                            <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900">Musik & Alat Musik</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Saluang, Talempong, Gandang Tasa, dan Rabab yang mengiringi nyanyian serta teater rakyat Minang.</p>
+                        </div>
+                        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                            <div class="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center text-lg sm:text-2xl">🏛️</div>
+                            <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900">Arsitektur Rumah Gadang</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Atap Gonjong bergaris lengkung tajam melambangkan tanduk kerbau dan keharmonisan dengan alam.</p>
+                        </div>
+                        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                            <div class="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-purple-100 text-purple-800 flex items-center justify-center text-lg sm:text-2xl">🧵</div>
+                            <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900">Kriya & Tenun Songket</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Songket Pandai Sikek & Silungkang bernilai tinggi dengan benang emas dan sulaman halus.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 4. CULINARY PAGE
+        function renderCulinaryPage() {
+            return `
+                <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+                    <div>
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Cita Rasa Rempah</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Kuliner Khas Minangkabau</h1>
+                        <p class="text-xs text-ranah-textMuted mt-1">Kenikmatan hidangan berbumbu rempah pekat autentik pilihan dunia.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        ${citiesData.flatMap(c => c.culinary).map(item => `
+                            <div class="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm space-y-3 sm:space-y-4 flex flex-col justify-between">
+                                <div class="space-y-2 sm:space-y-3">
+                                    <img src="${item.img}" class="w-full h-32 sm:h-44 rounded-2xl object-cover" />
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900">${item.name}</h3>
+                                        <span class="text-[9px] sm:text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">${item.spiciness}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+                                    <div class="text-[10px] sm:text-[11px] text-slate-500 space-y-0.5">
+                                        <p><strong>Bahan Utama:</strong> ${item.ingredients}</p>
+                                        <p><strong>Spot Rekomendasi:</strong> ${item.spot}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 5. CALENDAR PAGE
+        function renderCalendarPage() {
+            return `
+                <div class="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+                    <div>
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Agenda Kebudayaan</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Kalender Festival & Event Budaya</h1>
+                        <p class="text-xs text-ranah-textMuted mt-1">Jadwal lengkap perayaan adat, festival seni, dan pesta rakyat di Ranah Minang.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                        ${festivalEvents.map(ev => `
+                            <div class="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex gap-3 sm:gap-5 items-start">
+                                <img src="${ev.img}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover shrink-0" />
+                                <div class="space-y-1 sm:space-y-2">
+                                    <span class="text-[9px] sm:text-[10px] bg-ranah-gold/20 text-ranah-dark px-2 sm:px-2.5 py-0.5 rounded-full font-bold">📍 ${ev.city}</span>
+                                    <h3 class="text-base sm:text-lg font-serif font-bold text-slate-900">${ev.name}</h3>
+                                    <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">${ev.desc}</p>
+                                    <p class="text-[10px] sm:text-[11px] text-amber-700 font-semibold flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${ev.date}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 6. CITY DETAIL PAGE
+        function renderCityDetailPage(city) {
+            return `
+                <div class="relative h-56 sm:h-80 md:h-96 w-full overflow-hidden">
+                    <img src="${city.banner}" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-ranah-darker via-ranah-dark/60 to-transparent"></div>
+                    <div class="absolute bottom-4 sm:bottom-8 left-0 right-0 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 text-white space-y-2">
+                        <div class="flex items-center gap-2 sm:gap-3">
+                            <span class="px-2.5 sm:px-3 py-0.5 sm:py-1 bg-ranah-gold text-ranah-dark font-extrabold text-xs sm:text-sm rounded-full uppercase">${city.nickname}</span>
+                            <button onclick="toggleFavorite('${city.id}')" class="p-1.5 sm:p-2 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white transition">
+                                <i data-lucide="heart" class="w-3.5 h-3.5 sm:w-4 sm:h-4 ${favorites.includes(city.id) ? 'text-red-500 fill-red-500' : ''}"></i>
+                            </button>
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight">${city.name}</h1>
+                        <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl">${city.tagline}</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-8 sm:space-y-12">
+                    
+                    <!-- Sejarah -->
+                    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-4 sm:space-y-6">
+                        <h2 class="text-xl sm:text-2xl font-serif font-bold text-slate-900 border-b border-slate-100 pb-2 sm:pb-3">Sejarah Kota ${city.name}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm mb-1">📍 Asal-usul Nama</h3>
+                                <p>${city.history.origin}</p>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm mb-1">📜 Perkembangan</h3>
+                                <p>${city.history.development}</p>
+                            </div>
+                            <div class="bg-amber-50 p-3 sm:p-4 rounded-2xl border border-amber-200">
+                                <h3 class="font-bold text-amber-900 text-sm mb-1.5">👥 Tokoh Bersejarah</h3>
+                                <ul class="space-y-0.5 text-[10px] sm:text-[11px]">
+                                    ${city.history.figures.map(f => `<li>• ${f}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Landmark -->
+                    <section class="space-y-4 sm:space-y-6">
+                        <h2 class="text-xl sm:text-2xl font-serif font-bold text-slate-900">🏛️ Landmark Bersejarah</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                            ${city.landmarks.map(lm => `
+                                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200/80 flex flex-col sm:flex-row">
+                                    <img src="${lm.img}" class="w-full sm:w-2/5 h-40 sm:h-48 object-cover" />
+                                    <div class="p-4 sm:p-6 space-y-1.5 sm:space-y-2 flex flex-col justify-between">
+                                        <div>
+                                            <span class="text-[9px] sm:text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full">${lm.location}</span>
+                                            <h3 class="font-serif font-bold text-base sm:text-lg text-slate-900 mt-1">${lm.name}</h3>
+                                            <p class="text-xs text-slate-600">${lm.desc}</p>
+                                        </div>
+                                        <p class="text-[10px] sm:text-[11px] bg-amber-50 text-amber-900 p-2 rounded-xl"><strong>Fakta:</strong> ${lm.fact}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Kamus Audio -->
+                    <section class="bg-ranah-dark text-white rounded-3xl p-6 sm:p-8 border border-ranah-green shadow-xl space-y-4 sm:space-y-6">
+                        <h2 class="text-xl sm:text-2xl font-serif font-bold">🗣️ Mini Kamus Bahasa Minang (${city.name})</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                            ${city.dictionary.map(d => `
+                                <div class="bg-ranah-green/60 p-3 sm:p-4 rounded-2xl border border-ranah-lightgreen flex items-center justify-between">
+                                    <div>
+                                        <p class="text-[9px] sm:text-[10px] text-slate-300">Indonesia: ${d.indo}</p>
+                                        <p class="text-sm sm:text-base font-bold text-ranah-gold">${d.minang}</p>
+                                    </div>
+                                    <button onclick="playAudio('${d.audioText}')" class="p-1.5 sm:p-2 bg-ranah-gold text-ranah-dark rounded-xl hover:bg-amber-400 transition" title="Dengarkan Suara">
+                                        <i data-lucide="volume-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                </div>
+            `;
+        }
+
+        // 7. QUIZ PAGE
+        function renderQuizPage() {
+            return `
+                <div class="max-w-3xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+                    <div class="text-center space-y-2">
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Gamifikasi Budaya</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">🎮 Quiz Pengetahuan Minangkabau</h1>
+                        <p class="text-xs text-ranah-textMuted">Kumpulkan poin XP untuk meningkatkan level penjelajah budaya Anda!</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/80 space-y-4 sm:space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3 sm:pb-4">
+                            <span class="text-xs sm:text-sm font-bold text-ranah-gold">Poin XP Anda: ${userScore} XP</span>
+                            <span class="text-xs text-slate-400" id="quiz-progress">Soal 1 dari ${quizQuestions.length}</span>
+                        </div>
+
+                        <div id="quiz-body" class="space-y-4 sm:space-y-6">
+                            <!-- Dynamic Question -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let currentQuizIndex = 0;
+        function initQuiz() {
+            currentQuizIndex = 0;
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const q = quizQuestions[currentQuizIndex];
+            const body = document.getElementById('quiz-body');
+            const progress = document.getElementById('quiz-progress');
+
+            if (!q) {
+                body.innerHTML = `
+                    <div class="text-center py-6 sm:py-8 space-y-3 sm:space-y-4">
+                        <div class="text-3xl sm:text-4xl">🎉</div>
+                        <h3 class="text-xl sm:text-2xl font-serif font-bold text-slate-900">Selamat, Kuis Selesai!</h3>
+                        <p class="text-xs sm:text-sm text-slate-600">Total poin XP Anda saat ini adalah <strong>${userScore} XP</strong>.</p>
+                        <button onclick="navigateTo('home')" class="px-5 sm:px-6 py-2.5 sm:py-3 bg-ranah-gold text-ranah-dark font-extrabold text-xs sm:text-sm rounded-xl hover:bg-ranah-goldHover transition">Kembali ke Beranda</button>
+                    </div>
+                `;
+                return;
+            }
+
+            if (progress) progress.textContent = `Soal ${currentQuizIndex + 1} dari ${quizQuestions.length}`;
+            body.innerHTML = `
+                <h3 class="text-base sm:text-lg font-bold text-slate-800">${q.question}</h3>
+                <div class="space-y-2 sm:space-y-3">
+                    ${q.options.map((opt, idx) => `
+                        <button onclick="checkQuizAnswer(${idx})" class="w-full text-left p-3 sm:p-4 rounded-2xl border border-slate-200 hover:border-ranah-gold hover:bg-amber-50 font-medium text-xs sm:text-sm text-slate-700 transition flex justify-between items-center">
+                            <span>${opt}</span>
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-300"></i>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function checkQuizAnswer(selectedIdx) {
+            const q = quizQuestions[currentQuizIndex];
+            if (selectedIdx === q.answer) {
+                userScore += 25;
+                localStorage.setItem('rk_score', userScore.toString());
+                showToast("Jawaban Benar! +25 XP 🎉");
+            } else {
+                showToast("Jawaban belum tepat. Coba soal berikutnya!");
+            }
+            currentQuizIndex++;
+            renderQuizQuestion();
+        }
+
+        // 8. ABOUT PAGE
+        function renderAboutPage() {
+            return `
+                <div class="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+                    <div class="text-center space-y-2 sm:space-y-3">
+                        <span class="text-xs font-bold text-ranah-gold uppercase tracking-wider">Tentang Portal</span>
+                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">RanahKita - Sumatra Barat</h1>
+                        <p class="text-xs text-ranah-textMuted max-w-xl mx-auto">Portal ensiklopedia digital dan panduan pariwisata interaktif kebudayaan Minangkabau.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-4 sm:space-y-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <p>
+                            RanahKita didedikasikan untuk melestarikan, mendokumentasikan, dan memperkenalkan kekayaan sejarah, seni, kuliner, serta pesona alam Sumatra Barat kepada generasi muda dan wisatawan mancanegara.
+                        </p>
+                        <blockquote class="italic border-l-4 border-ranah-gold pl-3 sm:pl-4 py-2 font-serif text-sm sm:text-base text-slate-800 bg-amber-50/50 rounded-r-xl">
+                            "Adat Basandi Syarak, Syarak Basandi Kitabullah."
+                        </blockquote>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Search Controller
+        function handleSearch(query) {
+            const resultsBox = document.getElementById('search-results');
+            if (!query.trim()) {
+                resultsBox.classList.add('hidden');
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const matches = citiesData.filter(c => 
+                c.name.toLowerCase().includes(q) || 
+                c.nickname.toLowerCase().includes(q) ||
+                c.culinary.some(cul => cul.name.toLowerCase().includes(q))
+            );
+
+            if (matches.length === 0) {
+                resultsBox.innerHTML = `<p class="p-4 text-xs text-slate-400 text-center">Tidak ada hasil yang ditemukan.</p>`;
+            } else {
+                resultsBox.innerHTML = matches.map(c => `
+                    <div onclick="openCity('${c.id}'); document.getElementById('search-results').classList.add('hidden')" class="p-3 hover:bg-amber-50 cursor-pointer flex items-center justify-between border-b border-slate-100 last:border-none">
+                        <div>
+                            <p class="text-xs font-bold text-slate-800">${c.name}</p>
+                            <p class="text-[10px] text-ranah-gold font-medium">${c.nickname}</p>
+                        </div>
+                        <span class="text-[10px] text-slate-400">📍 Lihat Profil</span>
+                    </div>
+                `).join('');
+            }
+            resultsBox.classList.remove('hidden');
+        }
+
+        // Initialize on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            navigateTo('home');
+        });
+    </script>
+</body>
+</html>
