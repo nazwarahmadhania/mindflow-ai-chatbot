@@ -101,7 +101,7 @@ mindflow-ai/
 
 Main interface of MindFlow AI.
 
-![Main Interface](screenshots/main-interface.png)
+![Main Interface]([screenshots/main-interface.png](https://github.com/nazwarahmadhania/mindflow-ai-chatbot/blob/9e43221c5df2e59e59d6de475b899168b168330b/Screenshot%202026-09-08%20051914.png))
 
 ---
 
