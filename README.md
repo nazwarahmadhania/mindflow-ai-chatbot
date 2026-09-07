@@ -41,6 +41,7 @@
 
 ## 📂 Project Structure
 
+```text
 mindflow-ai/
 │
 ├── public/
@@ -53,6 +54,7 @@ mindflow-ai/
 ├── .env
 ├── .gitignore
 └── README.md
+```
 
 ---
 
@@ -89,7 +91,7 @@ mindflow-ai/
 6. **Open your browser**
    ```text
    http://localhost:3000
-```
+   ```
 
 ---
 
