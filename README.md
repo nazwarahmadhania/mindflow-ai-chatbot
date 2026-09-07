@@ -91,7 +91,7 @@ mindflow-ai/
 6. **Open your browser**
    ```text
    http://localhost:3000
-```
+   ```
 
 ---
 
